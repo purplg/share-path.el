@@ -18,6 +18,11 @@
 
 ;;; Code:
 
+(defgroup share-path '()
+  "Share your current project path to external tools."
+  :group 'external
+  :prefix "share-path-")
+
 (defcustom share-path-path "/tmp/emacs-share-path"
   "The file to update when the path changes.
 Recommended to use a tmp file.
