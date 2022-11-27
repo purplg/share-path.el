@@ -1,4 +1,4 @@
-;;; share-path.el --- Shares the current projects path with other applications. -*- lexical-binding: t; -*-
+;;; share-path.el --- Share your current project path to external tools. -*- lexical-binding: t; -*-
 
 ;; Homepage: https://codeberg.org/purplg/share-path.el
 ;; SPDX-License-Identifier: MIT
