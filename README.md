@@ -1,6 +1,6 @@
 # share-path.el
 
-Share your current project path to external tools.
+Share your current buffer path to external tools.
 
 ## Usage
 
