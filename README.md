@@ -13,7 +13,7 @@ Install and enable the mode, for example:
   (share-path-mode))
 ```
 
-External program can read from the path defined in `share-path-path'. By default, this path is `/tmp/emacs-share-path`.
+External program can read from the path defined in `share-path-path`. By default, this path is `/tmp/emacs-share-path`.
 
 To automatically start newly spawned terminals in the directory of your project, add this to your
 .bashrc or equivalent bash-compatible shell:
