@@ -55,7 +55,7 @@ First one to return non-nil is used."
   :group 'share-path
   :type '(list variable))
 
-(defun share-mode-update (&rest _)
+(defun share-path-update (&rest _)
   "Update the path at `share-path-path'."
   (let ((funcs share-path-path-functions)
         (path nil))
@@ -68,7 +68,7 @@ First one to return non-nil is used."
   "Called when `share-path-mode' is enabled."
   (if share-path-path
       (dolist (hook share-path-update-hooks)
-        (add-hook hook #'share-mode-update)
+        (add-hook hook #'share-path-update)
         ;; We exit the mode when Emacs exits so we can clean up our mess.
         (add-hook 'kill-emacs-hook (lambda () (share-path-mode 0))))
     (message "`share-path-path' must be set to use `share-path-mode'.")
@@ -77,7 +77,7 @@ First one to return non-nil is used."
 (defun share-path--mode-disable ()
   "Called when `share-path-mode' is disabled."
   (dolist (hook share-path-update-hooks)
-    (remove-hook hook #'share-mode-update))
+    (remove-hook hook #'share-path-update))
   (delete-file share-path-path))
 
 ;;;###autoload
