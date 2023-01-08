@@ -64,7 +64,7 @@ First one to return non-nil is used."
     (with-temp-file share-path-path
       (insert (or path "")))))
 
-(defun share-path--mode-enable ()
+(defun share-path--on ()
   "Called when `share-path-mode' is enabled."
   (if share-path-path
       (dolist (hook share-path-update-hooks)
@@ -74,7 +74,7 @@ First one to return non-nil is used."
     (message "`share-path-path' must be set to use `share-path-mode'.")
     (share-path-mode 0)))
 
-(defun share-path--mode-disable ()
+(defun share-path--off ()
   "Called when `share-path-mode' is disabled."
   (dolist (hook share-path-update-hooks)
     (remove-hook hook #'share-path-update))
@@ -87,8 +87,8 @@ First one to return non-nil is used."
   :global t
   :interactive t
   (if share-path-mode
-      (share-path--mode-enable)
-    (share-path--mode-disable)))
+      (share-path--on)
+    (share-path--off)))
 
 (provide 'share-path)
 
