@@ -31,13 +31,21 @@ External programs will read the contents of the file at this path."
   :group 'share-path
   :type 'file)
 
-(defcustom share-path-path-function
-  (lambda ()
-    (when-let ((project (project-current))) ; and a project is open
-      (expand-file-name (project-root (project-current)))))
-  "Function called when looking up the currect directory."
+(defun share-path-of-project.el ()
+  (when-let ((project (project-current))) ; and a project is open
+    (expand-file-name (project-root (project-current)))))
+
+(defun share-path-of-buffer-file-name ()
+  (when-let ((file-name (buffer-file-name (current-buffer))))
+    (file-name-directory file-name)))
+
+(defcustom share-path-path-functions
+  '(share-path-of-project.el
+    share-path-of-buffer-file-name)
+  "Functions to evaluate, in order, when looking up the currect directory.
+First one to return non-nil is used."
   :group 'share-path
-  :type 'function)
+  :type '(list function))
 
 (defcustom share-path-update-hooks
   '(select-frame-hook
@@ -49,9 +57,12 @@ External programs will read the contents of the file at this path."
 
 (defun share-mode-update (&rest _)
   "Update the path at `share-path-path'."
-  (with-temp-file share-path-path
-    (when-let ((path (funcall share-path-path-function)))
-      (insert path))))
+  (let ((funcs share-path-path-functions)
+        (path nil))
+    (while (and funcs (not path))
+      (setq path (funcall (pop funcs))))
+    (with-temp-file share-path-path
+      (insert (or path "")))))
 
 (defun share-path--mode-enable ()
   "Called when `share-path-mode' is enabled."
